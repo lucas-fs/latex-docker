@@ -52,3 +52,49 @@ Clean temporary files generated in the Latex file compilation.
 ```
 ./dockertex.sh cleantex sample.tex
 ```
+
+## Use with VS Code
+
+1. Install VSCode extension LaTeX Workshop. (Ctrl+P) and paste the following command:
+
+```
+ext install James-Yu.latex-workshop
+```
+
+2. Set some configurations for the extention. Open the VSCode *settings.json* and append the following configs:
+
+```
+    // latex
+    "latex-workshop.docker.enabled": true,
+    "latex-workshop.latex.outDir": "./out",
+    "latex-workshop.synctex.afterBuild.enabled": true,
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.docker.image.latex": "lucasfs/latex:texlive-full"
+```
+
+\* The Docker image and the outDir can be defined as you preferences.
+
+3. At this point you already can use the environment normally with VSCode.
+
+## Extend Docker images
+
+You may need a specific package depending on your project. In such cases you can extend one of the available Docker images and install the desired packages. Here is an example of a Dockerfile that extends one of the base Docker images:
+
+```
+FROM lucasfs/latex:texlive
+
+USER root
+
+# Install some packages or dependencies
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    abntex \
+    texlive-latex-extra \
+    && rm -rf /var/lib/apt/lists/*
+
+USER latex
+```
+
+After build make sure the correct Docker image is given in LaTeX Workshop settings.
+
+
+
