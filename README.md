@@ -63,7 +63,7 @@ ext install James-Yu.latex-workshop
 
 2. Set some configurations for the extention. Open the VSCode *settings.json* and append the following configs:
 
-```
+```json
     // latex
     "latex-workshop.docker.enabled": true,
     "latex-workshop.latex.outDir": "./out",
@@ -80,7 +80,7 @@ ext install James-Yu.latex-workshop
 
 You may need a specific package depending on your project. In such cases you can extend one of the available Docker images and install the desired packages. Here is an example of a Dockerfile that extends one of the base Docker images:
 
-```
+```dockerfile
 FROM lucasfs/latex:texlive
 
 USER root
